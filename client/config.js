@@ -1,9 +1,7 @@
 
 const CONFIG = {
 
-  API_BASE_URL: window.location.hostname === 'localhost' 
-    ? '/api' 
-    : 'https://auth-system-45j5.onrender.com/api'
+  API_BASE_URL: 'https://auth-system-45j5.onrender.com/api',
 };
 
 // Make it available globally
