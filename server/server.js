@@ -9,24 +9,30 @@ const adminRoutes = require('./routes/admin');
 
 const app = express();
 
-// CORS configuration for production
+
 const corsOptions = {
   origin: function (origin, callback) {
-    
+    // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
     
     const allowedOrigins = [
-      'https://auth-system-pi-nine.vercel.app/'
+      'http://localhost:3000',
+      'http://localhost:5000',
+      'https://auth-system-pi-nine.vercel.app', 
+      'https://auth-system-45j5.onrender.com' 
     ];
     
-    if (allowedOrigins.indexOf(origin) !== -1) {
+    if (allowedOrigins.indexOf(origin) !== -1 || origin.includes('vercel.app')) {
       callback(null, true);
     } else {
+      console.log('Blocked by CORS:', origin);
       callback(new Error('Not allowed by CORS'));
     }
   },
   credentials: true
 };
+
+
 
 app.use(cors(corsOptions));
 app.use(express.json());
