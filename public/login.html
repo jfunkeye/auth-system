@@ -28,7 +28,7 @@
             <button type="submit" class="btn">Login</button>
             
             <div class="link-text">
-                Don't have an account? <a href="/signup">Sign up</a>
+                Don't have an account? <a href="/signup.html">Sign up</a>
             </div>
         </form>
     </div>
@@ -55,7 +55,7 @@
                 if (response.ok) {
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('user', JSON.stringify(data.user));
-                    window.location.href = '/dashboard';
+                    window.location.href = '/dashboard.html';
                 } else {
                     showAlert(data.message, 'error');
                 }
@@ -74,4 +74,5 @@
 </body>
 
 </html>
+
 
