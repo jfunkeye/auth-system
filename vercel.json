@@ -2,15 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "client/**/*.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "client/**/*.css", 
-      "use": "@vercel/static"
-    },
-    {
-      "src": "client/**/*.js",
+      "src": "client/**/*",
       "use": "@vercel/static"
     }
   ],
@@ -24,7 +16,7 @@
       "dest": "/client/login.html"
     },
     {
-      "src": "/signup",
+      "src": "/signup", 
       "dest": "/client/signup.html"
     },
     {
@@ -36,20 +28,8 @@
       "dest": "/client/admin.html"
     },
     {
-      "src": "/styles.css",
-      "dest": "/client/styles.css"
-    },
-    {
-      "src": "/config.js",
-      "dest": "/client/config.js"
-    },
-    {
-      "src": "/(.*\\.(css|js|png|jpg|jpeg|gif|svg|ico))",
-      "dest": "/client/$1"
-    },
-    {
       "src": "/(.*)",
-      "dest": "/client/login.html"
+      "dest": "/client/$1"
     }
   ]
 }
