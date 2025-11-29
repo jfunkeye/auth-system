@@ -17,7 +17,7 @@ const corsOptions = {
     const allowedOrigins = [
       'http://localhost:3000',
       'http://localhost:5000',
-      'https://auth-system-rose-ten.vercel.app/', 
+      'https://auth-system-tau-umber.vercel.app//', 
       'https://auth-system-45j5.onrender.com' 
     ];
     
