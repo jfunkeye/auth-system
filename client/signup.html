@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up - Auth System</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="config.js"></script>
 </head>
 <body>
     <div class="scan-lines"></div>
@@ -47,7 +48,7 @@
             const alertDiv = document.getElementById('alert');
             
             try {
-                const response = await fetch('/api/auth/signup', {
+                const response = await fetch(`${window.APP_CONFIG.API_BASE_URL}/auth/signup`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
