@@ -33,7 +33,7 @@
             <button type="submit" class="btn">Sign Up</button>
             
             <div class="link-text">
-                Already have an account? <a href="/login">Login</a>
+                Already have an account? <a href="/loginhtml">Login</a>
             </div>
         </form>
     </div>
@@ -61,7 +61,7 @@
                 if (response.ok) {
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('user', JSON.stringify(data.user));
-                    window.location.href = '/dashboard';
+                    window.location.href = '/dashboard.html';
                 } else {
                     showAlert(data.message, 'error');
                 }
@@ -80,4 +80,5 @@
 </body>
 
 </html>
+
 
