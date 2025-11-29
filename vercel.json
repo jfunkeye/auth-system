@@ -1,31 +1,43 @@
 {
   "version": 2,
-  "buildCommand": "echo 'Building static site'",
-  "outputDirectory": ".",
-  "routes": [
+  "builds": [
     {
-      "src": "/",
-      "dest": "/client/login.html"
+      "src": "client/**/*",
+      "use": "@vercel/static"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/client/login.html"
     },
     {
-      "src": "/login",
-      "dest": "/client/login.html"
+      "source": "/login",
+      "destination": "/client/login.html"
     },
     {
-      "src": "/signup",
-      "dest": "/client/signup.html"
+      "source": "/signup",
+      "destination": "/client/signup.html"
     },
     {
-      "src": "/dashboard",
-      "dest": "/client/dashboard.html"
+      "source": "/dashboard",
+      "destination": "/client/dashboard.html"
     },
     {
-      "src": "/admin",
-      "dest": "/client/admin.html"
+      "source": "/admin",
+      "destination": "/client/admin.html"
     },
     {
-      "src": "/(.*)",
-      "dest": "/client/$1"
+      "source": "/styles.css",
+      "destination": "/client/styles.css"
+    },
+    {
+      "source": "/config.js",
+      "destination": "/client/config.js"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/client/$1"
     }
   ]
 }
