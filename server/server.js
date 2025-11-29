@@ -9,7 +9,6 @@ const adminRoutes = require('./routes/admin');
 
 const app = express();
 
-
 const corsOptions = {
   origin: function (origin, callback) {
     // Allow requests with no origin (like mobile apps or curl requests)
@@ -32,14 +31,34 @@ const corsOptions = {
   credentials: true
 };
 
-
-
 app.use(cors(corsOptions));
 app.use(express.json());
 
 // API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
+
+// ADD THIS ROUTE - /api endpoint
+app.get('/api', (req, res) => {
+  res.json({
+    message: 'Auth System API',
+    version: '1.0.0',
+    endpoints: {
+      auth: {
+        signup: 'POST /api/auth/signup',
+        login: 'POST /api/auth/login',
+        getProfile: 'GET /api/auth/me'
+      },
+      admin: {
+        getUsers: 'GET /api/admin/users',
+        addUser: 'POST /api/admin/users',
+        deleteUser: 'DELETE /api/admin/users/:id'
+      },
+      health: 'GET /api/health'
+    },
+    timestamp: new Date().toISOString()
+  });
+});
 
 // Health check route
 app.get('/api/health', (req, res) => {
@@ -59,7 +78,8 @@ app.get('/', (req, res) => {
     endpoints: {
       auth: '/api/auth',
       admin: '/api/admin',
-      health: '/api/health'
+      health: '/api/health',
+      api: '/api'
     }
   });
 });
@@ -85,6 +105,7 @@ connectDB().then(() => {
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`🚀 Server running on port ${PORT}`);
     console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
-    console.log(`🌐 Access the API at: https://auth-system-pi-nine.vercel.app:${PORT}`);
+    console.log(`🌐 Access the API at: http://localhost:${PORT}`);
+    console.log(`🔗 API endpoints available at: http://localhost:${PORT}/api`);
   });
 });
