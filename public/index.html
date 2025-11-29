@@ -1,13 +1,68 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Auth System</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading...</title>
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0f0f0f;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .loader {
+            width: 60px;
+            height: 60px;
+            border: 6px solid rgba(255,255,255,0.2);
+            border-top-color: #ffffff;
+            border-radius: 50%;
+            animation: spin 0.9s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .text {
+            color: white;
+            margin-top: 20px;
+            font-size: 18px;
+            opacity: 0.7;
+            animation: fade 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes fade {
+            from { opacity: 0.4; }
+            to { opacity: 1; }
+        }
+
+        .container {
+            text-align: center;
+        }
+    </style>
+
+    <script>
+        // Redirect to login page after 1 second
+        setTimeout(() => {
+            window.location.href = "login.html";
+        }, 1000);
+    </script>
 </head>
 <body>
-  <h1>Auth System Running Successfully</h1>
-  <p>Choose a page:</p>
-  <a href="/login.html">Login</a><br>
-  <a href="/signup.html">Signup</a><br>
-  <a href="/admin.html">Admin</a><br>
+
+    <div class="container">
+        <div class="loader"></div>
+        <div class="text">Loading...</div>
+    </div>
+
 </body>
 </html>
