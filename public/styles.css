@@ -5,8 +5,9 @@
 }
 
 body {
-  font-family: 'Segoe UI', 'Courier New', monospace;
-  background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+  font-family: 'Courier New', monospace;
+  background: #0a0a0a;
+  color: #00ff00;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -15,7 +16,7 @@ body {
   overflow: hidden;
 }
 
-/* Cyber grid background */
+/* Matrix code background */
 body::before {
   content: '';
   position: absolute;
@@ -24,19 +25,14 @@ body::before {
   right: 0;
   bottom: 0;
   background: 
-    linear-gradient(90deg, transparent 95%, rgba(0, 255, 255, 0.03) 95%),
-    linear-gradient(0deg, transparent 95%, rgba(0, 255, 255, 0.03) 95%);
-  background-size: 30px 30px;
-  animation: gridMove 20s linear infinite;
+    linear-gradient(90deg, transparent 98%, rgba(0, 255, 0, 0.02) 98%),
+    linear-gradient(0deg, transparent 98%, rgba(0, 255, 0, 0.02) 98%);
+  background-size: 20px 20px;
   pointer-events: none;
+  opacity: 0.3;
 }
 
-@keyframes gridMove {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(30px, 30px); }
-}
-
-/* Floating particles */
+/* Binary stream overlay */
 body::after {
   content: '';
   position: absolute;
@@ -45,38 +41,46 @@ body::after {
   right: 0;
   bottom: 0;
   background: 
-    radial-gradient(circle at 20% 80%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 40% 40%, rgba(0, 255, 0, 0.05) 0%, transparent 50%);
-  animation: float 6s ease-in-out infinite;
+    radial-gradient(circle at 20% 80%, rgba(0, 255, 0, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(0, 255, 0, 0.03) 0%, transparent 50%);
   pointer-events: none;
+  animation: pulse 8s ease-in-out infinite;
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0px) scale(1); }
-  50% { transform: translateY(-20px) scale(1.02); }
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
 }
 
 .container {
-  background: rgba(10, 10, 20, 0.8);
-  border-radius: 15px;
+  background: rgba(5, 5, 5, 0.95);
+  border-radius: 0;
   box-shadow: 
-    0 0 0 1px rgba(0, 255, 255, 0.1),
-    0 0 30px rgba(0, 255, 255, 0.2),
-    inset 0 0 20px rgba(0, 255, 255, 0.1);
+    0 0 0 1px rgba(0, 255, 0, 0.3),
+    0 0 30px rgba(0, 255, 0, 0.2),
+    inset 0 0 20px rgba(0, 255, 0, 0.1);
   padding: 40px;
   width: 100%;
   max-width: 420px;
   position: relative;
   z-index: 1;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(0, 255, 255, 0.3);
-  animation: containerGlow 4s ease-in-out infinite alternate;
+  border: 1px solid rgba(0, 255, 0, 0.5);
+  animation: terminalGlow 3s ease-in-out infinite alternate;
 }
 
-@keyframes containerGlow {
-  0% { box-shadow: 0 0 0 1px rgba(0, 255, 255, 0.1), 0 0 30px rgba(0, 255, 255, 0.2), inset 0 0 20px rgba(0, 255, 255, 0.1); }
-  100% { box-shadow: 0 0 0 1px rgba(0, 255, 255, 0.2), 0 0 40px rgba(0, 255, 255, 0.3), inset 0 0 30px rgba(0, 255, 255, 0.15); }
+@keyframes terminalGlow {
+  0% { 
+    box-shadow: 
+      0 0 0 1px rgba(0, 255, 0, 0.3),
+      0 0 20px rgba(0, 255, 0, 0.2),
+      inset 0 0 15px rgba(0, 255, 0, 0.1);
+  }
+  100% { 
+    box-shadow: 
+      0 0 0 1px rgba(0, 255, 0, 0.5),
+      0 0 30px rgba(0, 255, 0, 0.3),
+      inset 0 0 25px rgba(0, 255, 0, 0.15);
+  }
 }
 
 .auth-form {
@@ -87,13 +91,14 @@ body::after {
 h2 {
   text-align: center;
   margin-bottom: 30px;
-  color: #00ffff;
+  color: #00ff00;
   font-weight: 700;
-  font-size: 28px;
+  font-size: 24px;
   text-transform: uppercase;
-  letter-spacing: 2px;
-  text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+  letter-spacing: 3px;
+  text-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
   position: relative;
+  font-family: 'Courier New', monospace;
 }
 
 h2::after {
@@ -102,10 +107,23 @@ h2::after {
   bottom: -10px;
   left: 50%;
   transform: translateX(-50%);
-  width: 60px;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, #00ffff, transparent);
-  border-radius: 2px;
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #00ff00, transparent);
+  border-radius: 1px;
+}
+
+h2::before {
+  content: '>';
+  position: absolute;
+  left: -20px;
+  color: #00ff00;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
 }
 
 .form-group {
@@ -116,73 +134,71 @@ h2::after {
 label {
   display: block;
   margin-bottom: 8px;
-  color: #00ffff;
+  color: #00ff00;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 12px;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  text-shadow: 0 0 5px rgba(0, 255, 255, 0.3);
+  letter-spacing: 2px;
+  text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+  font-family: 'Courier New', monospace;
 }
 
 input {
   width: 100%;
-  padding: 14px 16px;
-  background: rgba(0, 0, 0, 0.6);
-  border: 2px solid rgba(0, 255, 255, 0.3);
-  border-radius: 8px;
-  font-size: 16px;
-  color: #00ffff;
+  padding: 12px 15px;
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(0, 255, 0, 0.5);
+  border-radius: 0;
+  font-size: 14px;
+  color: #00ff00;
   font-family: 'Courier New', monospace;
   transition: all 0.3s ease;
-  box-shadow: inset 0 0 10px rgba(0, 255, 255, 0.1);
+  box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.1);
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 input::placeholder {
-  color: rgba(0, 255, 255, 0.5);
-  font-family: 'Segoe UI', sans-serif;
+  color: rgba(0, 255, 0, 0.4);
+  font-family: 'Courier New', monospace;
+  text-transform: none;
 }
 
 input:focus {
   outline: none;
-  border-color: #00ffff;
+  border-color: #00ff00;
   box-shadow: 
-    0 0 15px rgba(0, 255, 255, 0.4),
-    inset 0 0 10px rgba(0, 255, 255, 0.2);
-  background: rgba(0, 0, 0, 0.8);
+    0 0 15px rgba(0, 255, 0, 0.4),
+    inset 0 0 15px rgba(0, 255, 0, 0.2);
+  background: rgba(0, 10, 0, 0.9);
 }
 
-/* Cyber input glow effect */
+/* Terminal input effect */
 .form-group::after {
-  content: '';
+  content: '_';
   position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(90deg, #00ffff, #ff00ff);
-  transition: width 0.3s ease;
-  border-radius: 2px;
-}
-
-.form-group:focus-within::after {
-  width: 100%;
+  bottom: 12px;
+  right: 15px;
+  color: #00ff00;
+  animation: blink 1s infinite;
+  font-weight: bold;
 }
 
 .btn {
-  background: linear-gradient(135deg, #00ffff 0%, #ff00ff 50%, #00ff00 100%);
-  color: #000;
-  border: none;
-  padding: 14px 24px;
-  border-radius: 8px;
-  font-size: 16px;
+  background: linear-gradient(135deg, #003300 0%, #006600 100%);
+  color: #00ff00;
+  border: 1px solid #00ff00;
+  padding: 12px 24px;
+  border-radius: 0;
+  font-size: 14px;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
   font-family: 'Courier New', monospace;
 }
 
@@ -193,40 +209,50 @@ input:focus {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-  transition: left 0.5s ease;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 0, 0.2), transparent);
+  transition: left 0.6s ease;
 }
 
 .btn:hover {
-  transform: translateY(-3px);
+  transform: translateY(-2px);
   box-shadow: 
-    0 0 30px rgba(0, 255, 255, 0.5),
-    0 0 40px rgba(255, 0, 255, 0.3);
-  animation: btnPulse 2s infinite;
+    0 0 25px rgba(0, 255, 0, 0.5),
+    0 0 35px rgba(0, 255, 0, 0.2);
+  background: linear-gradient(135deg, #004400 0%, #008800 100%);
+  animation: hackPulse 1.5s infinite;
 }
 
 .btn:hover::before {
   left: 100%;
 }
 
-@keyframes btnPulse {
-  0%, 100% { transform: translateY(-3px) scale(1); }
-  50% { transform: translateY(-3px) scale(1.05); }
+@keyframes hackPulse {
+  0%, 100% { 
+    box-shadow: 
+      0 0 25px rgba(0, 255, 0, 0.5),
+      0 0 35px rgba(0, 255, 0, 0.2);
+  }
+  50% { 
+    box-shadow: 
+      0 0 30px rgba(0, 255, 0, 0.6),
+      0 0 45px rgba(0, 255, 0, 0.3);
+  }
 }
 
 .btn:active {
-  transform: translateY(-1px);
+  transform: translateY(0);
 }
 
 .link-text {
   text-align: center;
   margin-top: 25px;
-  color: rgba(0, 255, 255, 0.7);
-  font-size: 14px;
+  color: rgba(0, 255, 0, 0.6);
+  font-size: 12px;
+  font-family: 'Courier New', monospace;
 }
 
 .link-text a {
-  color: #00ffff;
+  color: #00ff00;
   text-decoration: none;
   font-weight: 600;
   text-transform: uppercase;
@@ -234,41 +260,48 @@ input:focus {
   position: relative;
   padding: 2px 4px;
   transition: all 0.3s ease;
+  font-family: 'Courier New', monospace;
 }
 
 .link-text a::before {
-  content: '';
+  content: '[';
   position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: #ff00ff;
-  transition: width 0.3s ease;
-  border-radius: 1px;
+  left: -8px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.link-text a::after {
+  content: ']';
+  position: absolute;
+  right: -8px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .link-text a:hover {
-  color: #ff00ff;
-  text-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+  color: #00ff00;
+  text-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
 }
 
-.link-text a:hover::before {
-  width: 100%;
+.link-text a:hover::before,
+.link-text a:hover::after {
+  opacity: 1;
 }
 
 .alert {
-  padding: 15px;
-  border-radius: 8px;
+  padding: 12px 15px;
+  border-radius: 0;
   margin-bottom: 25px;
   text-align: center;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1px;
-  font-size: 14px;
+  font-size: 12px;
   border: 1px solid;
   position: relative;
   overflow: hidden;
+  font-family: 'Courier New', monospace;
 }
 
 .alert::before {
@@ -278,8 +311,8 @@ input:focus {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  animation: scan 2s linear infinite;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 0, 0.1), transparent);
+  animation: scan 3s linear infinite;
 }
 
 @keyframes scan {
@@ -288,17 +321,17 @@ input:focus {
 }
 
 .alert-error {
-  background: rgba(255, 0, 0, 0.1);
-  color: #ff4444;
-  border-color: rgba(255, 0, 0, 0.3);
-  box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
+  background: rgba(50, 0, 0, 0.8);
+  color: #ff3333;
+  border-color: rgba(255, 0, 0, 0.5);
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
 }
 
 .alert-success {
-  background: rgba(0, 255, 0, 0.1);
+  background: rgba(0, 30, 0, 0.8);
   color: #00ff00;
-  border-color: rgba(0, 255, 0, 0.3);
-  box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+  border-color: rgba(0, 255, 0, 0.5);
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
 }
 
 .dashboard {
@@ -306,14 +339,13 @@ input:focus {
 }
 
 .user-info {
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 10, 0, 0.8);
   padding: 25px;
-  border-radius: 12px;
   margin: 25px 0;
-  border: 1px solid rgba(0, 255, 255, 0.2);
+  border: 1px solid rgba(0, 255, 0, 0.3);
   box-shadow: 
-    inset 0 0 20px rgba(0, 255, 255, 0.1),
-    0 0 30px rgba(0, 255, 255, 0.1);
+    inset 0 0 20px rgba(0, 255, 0, 0.1),
+    0 0 25px rgba(0, 255, 0, 0.1);
   position: relative;
   overflow: hidden;
 }
@@ -324,9 +356,9 @@ input:focus {
   top: 0;
   left: 0;
   right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #00ffff, #ff00ff, #00ffff, transparent);
-  animation: borderFlow 3s linear infinite;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #00ff00, transparent);
+  animation: borderFlow 2s linear infinite;
 }
 
 @keyframes borderFlow {
@@ -335,32 +367,37 @@ input:focus {
 }
 
 .user-info h3 {
-  color: #00ffff;
+  color: #00ff00;
   margin-bottom: 15px;
-  font-size: 24px;
-  text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
-}
-
-.user-info p {
-  color: rgba(0, 255, 255, 0.8);
-  margin-bottom: 10px;
+  font-size: 20px;
+  text-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
   font-family: 'Courier New', monospace;
 }
 
+.user-info p {
+  color: rgba(0, 255, 0, 0.8);
+  margin-bottom: 10px;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+}
+
 .logout-btn {
-  background: linear-gradient(135deg, #ff4444 0%, #ff0066 100%);
+  background: linear-gradient(135deg, #330000 0%, #660000 100%);
+  color: #ff3333;
+  border: 1px solid #ff3333;
   margin-top: 20px;
-  box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
 }
 
 .logout-btn:hover {
-  background: linear-gradient(135deg, #ff0066 0%, #ff0000 100%);
+  background: linear-gradient(135deg, #440000 0%, #880000 100%);
   box-shadow: 
-    0 0 30px rgba(255, 0, 0, 0.5),
-    0 0 40px rgba(255, 0, 102, 0.3);
+    0 0 25px rgba(255, 0, 0, 0.5),
+    0 0 35px rgba(255, 0, 0, 0.2);
+  color: #ff6666;
 }
 
-/* Cyber scan lines effect */
+/* Terminal scan lines */
 .scan-lines {
   position: fixed;
   top: 0;
@@ -370,42 +407,67 @@ input:focus {
   background: linear-gradient(
     to bottom,
     transparent 50%,
-    rgba(0, 255, 255, 0.03) 50%
+    rgba(0, 255, 0, 0.02) 50%
   );
-  background-size: 100% 4px;
+  background-size: 100% 3px;
   pointer-events: none;
   z-index: 2;
-  animation: scanLines 1s linear infinite;
+  animation: scanLines 0.1s linear infinite;
 }
 
 @keyframes scanLines {
   0% { transform: translateY(0px); }
-  100% { transform: translateY(4px); }
+  100% { transform: translateY(3px); }
 }
 
 /* Responsive design */
 @media (max-width: 480px) {
   .container {
-    margin: 20px;
-    padding: 30px 25px;
+    margin: 15px;
+    padding: 30px 20px;
+    border: 1px solid rgba(0, 255, 0, 0.4);
   }
   
   h2 {
-    font-size: 24px;
+    font-size: 20px;
+    letter-spacing: 2px;
   }
   
   input {
-    padding: 12px 14px;
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+  
+  .btn {
+    padding: 10px 20px;
+    font-size: 13px;
   }
 }
 
-/* Cyber terminal style text selection */
+/* Terminal style text selection */
 ::selection {
-  background: rgba(0, 255, 255, 0.3);
-  color: #00ffff;
+  background: rgba(0, 255, 0, 0.3);
+  color: #00ff00;
 }
 
 ::-moz-selection {
-  background: rgba(0, 255, 255, 0.3);
-  color: #00ffff;
+  background: rgba(0, 255, 0, 0.3);
+  color: #00ff00;
+}
+
+/* Binary flicker effect */
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+.container {
+  animation: terminalGlow 3s ease-in-out infinite alternate, flicker 5s infinite;
+}
+
+/* Command prompt style for labels */
+label::before {
+  content: '> ';
+  color: #00ff00;
+  font-weight: bold;
 }
