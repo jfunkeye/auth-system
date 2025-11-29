@@ -1,8 +1,28 @@
 {
   "version": 2,
   "buildCommand": "echo 'Building static site'",
-  "outputDirectory": "client",
+  "outputDirectory": ".",
   "routes": [
+    {
+      "src": "/",
+      "dest": "/client/login.html"
+    },
+    {
+      "src": "/login",
+      "dest": "/client/login.html"
+    },
+    {
+      "src": "/signup",
+      "dest": "/client/signup.html"
+    },
+    {
+      "src": "/dashboard",
+      "dest": "/client/dashboard.html"
+    },
+    {
+      "src": "/admin",
+      "dest": "/client/admin.html"
+    },
     {
       "src": "/(.*)",
       "dest": "/client/$1"
