@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Auth System</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .dashboard-actions {
+            margin: 20px 0;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .btn-admin {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+        
+        .btn-admin:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="dashboard">
+            <h2>Dashboard</h2>
+            
+            <div id="alert" class="alert" style="display: none;"></div>
+            
+            <div class="user-info">
+                <h3>Welcome, <span id="userName"></span>!</h3>
+                <p>Email: <span id="userEmail"></span></p>
+                <p>Role: <span id="userRole"></span></p>
+                <p>You have successfully logged into the system.</p>
+            </div>
+
+            <div class="dashboard-actions">
+                <button class="btn btn-admin" id="adminBtn" style="display: none;">Admin Panel</button>
+                <button class="btn logout-btn" id="logoutBtn">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('token');
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            
+            if (!token || !user.id) {
+                window.location.href = '/login';
+                return;
+            }
+            
+            // Display user info
+            document.getElementById('userName').textContent = user.name;
+            document.getElementById('userEmail').textContent = user.email;
+            document.getElementById('userRole').textContent = user.role || 'user';
+            
+            // Show admin button if user is admin
+            if (user.role === 'admin') {
+                document.getElementById('adminBtn').style.display = 'block';
+                document.getElementById('adminBtn').addEventListener('click', () => {
+                    window.location.href = '/admin';
+                });
+            }
+            
+            // Logout button
+            document.getElementById('logoutBtn').addEventListener('click', () => {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                window.location.href = '/login';
+            });
+            
+            // Verify token with server
+            verifyToken();
+        });
+        
+        async function verifyToken() {
+            const token = localStorage.getItem('token');
+            
+            try {
+                const response = await fetch('/api/auth/me', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Invalid token');
+                }
+                
+                const data = await response.json();
+                // Update user role in case it changed
+                if (data.user.role) {
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    document.getElementById('userRole').textContent = data.user.role;
+                    
+                    // Show admin button if user is admin
+                    if (data.user.role === 'admin') {
+                        document.getElementById('adminBtn').style.display = 'block';
+                    }
+                }
+            } catch (error) {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                window.location.href = '/login';
+            }
+        }
+    </script>
+</body>
+</html>
