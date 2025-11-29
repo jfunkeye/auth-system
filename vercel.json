@@ -2,42 +2,18 @@
   "version": 2,
   "builds": [
     {
-      "src": "client/**/*",
-      "use": "@vercel/static"
+      "src": "server.js",
+      "use": "@vercel/node"
     }
   ],
-  "rewrites": [
+  "routes": [
     {
-      "source": "/",
-      "destination": "/client/login.html"
+      "src": "/api/(.*)",
+      "dest": "/server.js"
     },
     {
-      "source": "/login",
-      "destination": "/client/login.html"
-    },
-    {
-      "source": "/signup",
-      "destination": "/client/signup.html"
-    },
-    {
-      "source": "/dashboard",
-      "destination": "/client/dashboard.html"
-    },
-    {
-      "source": "/admin",
-      "destination": "/client/admin.html"
-    },
-    {
-      "source": "/styles.css",
-      "destination": "/client/styles.css"
-    },
-    {
-      "source": "/config.js",
-      "destination": "/client/config.js"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/client/$1"
+      "src": "/(.*)",
+      "dest": "/public/$1"
     }
   ]
 }
