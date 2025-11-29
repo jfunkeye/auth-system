@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
 require('dotenv').config();
 
 const authRoutes = require('./routes/auth');
@@ -8,46 +9,78 @@ const adminRoutes = require('./routes/admin');
 
 const app = express();
 
-// Middleware
-app.use(cors());
+// CORS configuration for production
+const corsOptions = {
+  origin: function (origin, callback) {
+    
+    if (!origin) return callback(null, true);
+    
+    const allowedOrigins = [
+      'http://localhost:3000',
+      'http://localhost:5000',
+      'https://auth-system-pi-nine.vercel.app/'
+    ];
+    
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
-app.use(express.static('../client'));
 
-
-// Routes
+// API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
 
-// Serve frontend pages
+// Health check route
+app.get('/api/health', (req, res) => {
+  res.json({ 
+    status: 'OK', 
+    message: 'Server is running',
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || 'development'
+  });
+});
+
+// Root route
 app.get('/', (req, res) => {
-  res.sendFile('login.html', { root: '../client' });
+  res.json({ 
+    message: 'Auth System Backend API',
+    version: '1.0.0',
+    endpoints: {
+      auth: '/api/auth',
+      admin: '/api/admin',
+      health: '/api/health'
+    }
+  });
 });
 
-app.get('/login', (req, res) => {
-  res.sendFile('login.html', { root: '../client' });
-});
+// MongoDB connection
+const connectDB = async () => {
+  try {
+    console.log('Connecting to MongoDB...');
+    await mongoose.connect(process.env.MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log('✅ MongoDB Connected');
+  } catch (error) {
+    console.error('❌ MongoDB connection error:', error.message);
+    process.exit(1);
+  }
+};
 
-app.get('/signup', (req, res) => {
-  res.sendFile('signup.html', { root: '../client' });
-});
-
-app.get('/dashboard', (req, res) => {
-  res.sendFile('dashboard.html', { root: '../client' });
-});
-
-app.get('/admin', (req, res) => {
-  res.sendFile('admin.html', { root: '../client' });
-});
-
-// Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => console.log('Connected to MongoDB'))
-.catch(err => console.error('MongoDB connection error:', err));
-
+// Start server
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+connectDB().then(() => {
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+    console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
+    console.log(`🌐 Access the API at: http://localhost:${PORT}`);
+  });
 });
